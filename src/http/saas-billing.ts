@@ -1,5 +1,6 @@
 import type { DashboardOverview, DashboardOverviewQuery } from "@/lib/dashboard-overview";
 import type { FinanceOverview } from "@/lib/finance-overview";
+import type { OrganizationDetail } from "@/lib/organization-detail";
 
 import { api } from "./api-client";
 
@@ -79,7 +80,7 @@ export async function getSaasDashboardOverview(query: DashboardOverviewQuery = {
 }
 
 export async function getSaasOrganizationDetail(id: string) {
-  return api.get(`superadmin/saas-billing/organizations/${id}`).json<any>();
+  return api.get(`superadmin/saas-billing/organizations/${id}`).json<OrganizationDetail>();
 }
 
 export async function updateSaasOrganization(id: string, input: any) {
