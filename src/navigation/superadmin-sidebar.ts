@@ -1,4 +1,4 @@
-import { BadgePercent, Blocks, Box, CircleDollarSign, LayoutDashboard, type LucideIcon } from "lucide-react";
+import { BadgePercent, Blocks, Box, CircleDollarSign, LayoutDashboard, type LucideIcon, ServerCog } from "lucide-react";
 
 export interface SuperadminNavItem {
   title: string;
@@ -28,6 +28,9 @@ export const superadminSidebarItems: SuperadminNavGroup[] = [
   },
   {
     label: "Operações",
-    items: [{ title: "Organizações", url: "/organizacoes", icon: Blocks }],
+    items: [
+      { title: "Painel", url: "/operacoes", icon: ServerCog },
+      { title: "Organizações", url: "/organizacoes", icon: Blocks },
+    ],
   },
 ];
