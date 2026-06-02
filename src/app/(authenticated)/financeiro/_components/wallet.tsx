@@ -36,7 +36,7 @@ export function Wallet({ organizations }: WalletProps) {
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="font-medium tabular-nums text-sm">
+                  <span className="font-medium text-sm tabular-nums">
                     {formatFinanceCurrency(organization.paidCents)}
                   </span>
                   <ChevronRight className="size-4 text-muted-foreground" />

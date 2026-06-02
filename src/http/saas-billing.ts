@@ -1,3 +1,4 @@
+import type { DashboardOverview, DashboardOverviewQuery } from "@/lib/dashboard-overview";
 import type { FinanceOverview } from "@/lib/finance-overview";
 
 import { api } from "./api-client";
@@ -52,6 +53,29 @@ export async function getSaasOrganizations() {
 
 export async function getSaasFinanceOverview() {
   return api.get("superadmin/saas-billing/finance-overview").json<FinanceOverview>();
+}
+
+export async function getSaasDashboardOverview(query: DashboardOverviewQuery = {}) {
+  const searchParams = new URLSearchParams();
+
+  if (query.periodDays) {
+    searchParams.set("periodDays", String(query.periodDays));
+  }
+
+  if (query.granularity) {
+    searchParams.set("granularity", query.granularity);
+  }
+
+  if (query.segment) {
+    searchParams.set("segment", query.segment);
+  }
+
+  const suffix = searchParams.toString();
+  const path = suffix
+    ? `superadmin/saas-billing/dashboard-overview?${suffix}`
+    : "superadmin/saas-billing/dashboard-overview";
+
+  return api.get(path).json<DashboardOverview>();
 }
 
 export async function getSaasOrganizationDetail(id: string) {

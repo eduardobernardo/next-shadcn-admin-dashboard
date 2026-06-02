@@ -3,7 +3,7 @@
 import Link from "next/link";
 
 import { parseISO } from "date-fns";
-import { ChevronRight, Zap } from "lucide-react";
+import { CalendarClock, ChevronRight } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemTitle } from "@/components/ui/item";
@@ -47,12 +47,12 @@ export function UpcomingTransactions({ invoices, totalCents }: UpcomingTransacti
               {invoices.length === 1 ? "cobrança" : "cobranças"} nos próximos 30 dias
             </p>
           </div>
-          {invoices.length > 0 ? (
-            <div className="flex w-max items-center gap-2 rounded-md border border-border bg-muted/70 px-2 py-1.5 text-sm">
-              <Zap className="size-4 fill-primary text-primary" />
+          {invoices[0] ? (
+            <div className="flex w-max items-center gap-2 rounded-md border border-border bg-muted/50 px-2 py-1.5 text-sm">
+              <CalendarClock className="size-4 text-muted-foreground" />
               <span className="text-muted-foreground">
-                Próximo vencimento:{" "}
-                <span className="font-medium text-foreground">{formatDueDate(invoices[0]?.dueAt ?? null)}</span>
+                Próxima cobrança:{" "}
+                <span className="font-medium text-foreground">{formatDueDate(invoices[0].dueAt)}</span>
               </span>
             </div>
           ) : null}

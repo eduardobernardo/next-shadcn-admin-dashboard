@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { BadgePercent, Blocks, Box, Download, LayoutDashboard, Receipt } from "lucide-react";
+import { BadgePercent, Blocks, Box } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,19 +9,16 @@ const shortcuts = [
   { id: "orgs", label: "Organizações", icon: Blocks, href: "/organizacoes" },
   { id: "plans", label: "Planos", icon: Box, href: "/planos" },
   { id: "coupons", label: "Cupons", icon: BadgePercent, href: "/cupons" },
-  { id: "dashboard", label: "Dashboard", icon: LayoutDashboard, href: "/dashboard" },
-  { id: "finance", label: "Financeiro", icon: Receipt, href: "/financeiro" },
-  { id: "export", label: "Exportar", icon: Download, href: "/organizacoes" },
 ] as const;
 
 export function QuickActions() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="font-normal">Atalhos</CardTitle>
+        <CardTitle className="font-normal">Operações</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-3 gap-4 sm:grid-cols-3">
+        <div className="grid grid-cols-3 gap-4">
           {shortcuts.map((shortcut) => {
             const Icon = shortcut.icon;
 

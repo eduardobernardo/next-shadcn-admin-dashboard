@@ -1,8 +1,11 @@
-import { AlertTriangle, CircleCheck, Info } from "lucide-react";
+import Link from "next/link";
+
+import { AlertTriangle, ArrowRight, Info } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/components/ui/item";
 import type { FinanceAlert } from "@/lib/finance-overview";
+import { resolveFinanceAlertActionHref } from "@/lib/organization-filters";
 
 type FinanceNotificationProps = {
   alert: FinanceAlert | null;
@@ -17,6 +20,8 @@ function AlertIcon({ severity }: { severity: FinanceAlert["severity"] }) {
 export function FinanceNotification({ alert }: FinanceNotificationProps) {
   if (!alert) return null;
 
+  const actionHref = resolveFinanceAlertActionHref(alert);
+
   return (
     <Item className="rounded-xl" variant="outline">
       <ItemMedia variant="icon">
@@ -26,14 +31,16 @@ export function FinanceNotification({ alert }: FinanceNotificationProps) {
         <ItemTitle>{alert.title}</ItemTitle>
         <ItemDescription>{alert.description}</ItemDescription>
       </ItemContent>
-      <ItemActions>
-        <Button size="sm" variant="outline" asChild>
-          <a href="/organizacoes">
-            <CircleCheck className="size-3.5" />
-            Ver organizações
-          </a>
-        </Button>
-      </ItemActions>
+      {actionHref ? (
+        <ItemActions>
+          <Button size="sm" variant="outline" asChild>
+            <Link href={actionHref}>
+              Ver organizações
+              <ArrowRight className="size-3.5" />
+            </Link>
+          </Button>
+        </ItemActions>
+      ) : null}
     </Item>
   );
 }

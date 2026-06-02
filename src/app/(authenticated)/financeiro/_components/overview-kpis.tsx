@@ -20,7 +20,9 @@ export function OverviewKpis({ kpis }: OverviewKpisProps) {
               <div className="text-3xl leading-none tracking-tight">
                 {formatFinanceCurrency(kpis.estimatedMrrCents, true)}
               </div>
-              <p className="text-muted-foreground text-xs">ARR {formatFinanceCurrency(kpis.estimatedArrCents, true)}</p>
+              <p className="text-muted-foreground text-xs">
+                ARR {formatFinanceCurrency(kpis.estimatedArrCents, true)} · {kpis.trialingSubscriptions} em trial
+              </p>
             </div>
             <Badge className="bg-green-500/10 text-green-700 dark:bg-green-500/15 dark:text-green-300">
               {kpis.activeSubscriptions} ativas
@@ -41,9 +43,6 @@ export function OverviewKpis({ kpis }: OverviewKpisProps) {
                 {kpis.paidThisMonthCount} {kpis.paidThisMonthCount === 1 ? "fatura paga" : "faturas pagas"}
               </p>
             </div>
-            <Badge className="bg-green-500/10 text-green-700 dark:bg-green-500/15 dark:text-green-300">
-              {kpis.conversionRatePercent}%
-            </Badge>
           </CardContent>
         </Card>
 
@@ -60,7 +59,7 @@ export function OverviewKpis({ kpis }: OverviewKpisProps) {
                 {kpis.pendingCount} {kpis.pendingCount === 1 ? "fatura" : "faturas"} aguardando pagamento
               </p>
             </div>
-            <Badge variant="outline">{kpis.trialingSubscriptions} trials</Badge>
+            {kpis.pendingCount > 0 ? <Badge variant="outline">{kpis.pendingCount} em aberto</Badge> : null}
           </CardContent>
         </Card>
 

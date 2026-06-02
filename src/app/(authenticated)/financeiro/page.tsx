@@ -1,9 +1,10 @@
+import Link from "next/link";
+
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { Download, RotateCw } from "lucide-react";
+import { Blocks, RotateCw } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getSaasFinanceOverview } from "@/http/saas-billing";
 
 import { BalanceDistributionCard } from "./_components/balance-distribution-card";
@@ -33,94 +34,59 @@ export default async function FinanceiroPage() {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="space-y-1">
-        <h1 className="text-3xl tracking-tight">Financeiro</h1>
-        <p className="text-muted-foreground text-sm capitalize">{formattedDate}</p>
-      </div>
-
-      <Tabs defaultValue="overview" className="flex flex-col gap-4">
-        <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-          <TabsList variant="line">
-            <TabsTrigger value="overview">Visão geral</TabsTrigger>
-            <TabsTrigger value="invoices">Faturas</TabsTrigger>
-            <TabsTrigger value="projections">Projeções</TabsTrigger>
-          </TabsList>
-
-          <div className="flex flex-wrap items-center gap-3">
-            {updatedAt ? (
-              <div className="flex items-center gap-1.5 text-muted-foreground text-xs">
-                <RotateCw className="size-4" />
-                <span>Atualizado às {updatedAt}</span>
-              </div>
-            ) : null}
-            <Button size="sm" variant="outline" asChild>
-              <a href="/organizacoes">
-                <Download />
-                Ver organizações
-              </a>
-            </Button>
-          </div>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <div className="space-y-1">
+          <h1 className="text-3xl tracking-tight">Financeiro</h1>
+          <p className="text-muted-foreground text-sm capitalize">{formattedDate}</p>
         </div>
 
-        <TabsContent value="overview" className="flex flex-col gap-4">
-          <div className="grid grid-cols-1 gap-4 xl:grid-cols-12">
-            <div className="xl:col-span-6">
-              <OverviewKpis kpis={overview.kpis} />
+        <div className="flex flex-wrap items-center gap-3">
+          {updatedAt ? (
+            <div className="flex items-center gap-1.5 text-muted-foreground text-xs">
+              <RotateCw className="size-4" />
+              <span>Dados de {updatedAt}</span>
             </div>
+          ) : null}
+          <Button size="sm" variant="outline" asChild>
+            <Link href="/organizacoes">
+              <Blocks />
+              Organizações
+            </Link>
+          </Button>
+        </div>
+      </div>
 
-            <div className="flex flex-col gap-4 xl:col-span-6">
-              <IncomeBreakdown revenueByPlan={overview.revenueByPlan} />
-              <FinanceNotification alert={overview.primaryAlert} />
-            </div>
-          </div>
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-12">
+        <div className="xl:col-span-6">
+          <OverviewKpis kpis={overview.kpis} />
+        </div>
 
-          <div className="grid grid-cols-1 gap-4 xl:grid-cols-12">
-            <div className="xl:col-span-7">
-              <TransactionsOverviewCard timeline={overview.cashflowTimeline} />
-            </div>
-            <div className="xl:col-span-5">
-              <BalanceDistributionCard distribution={overview.invoiceStatusDistribution} />
-            </div>
-          </div>
+        <div className="flex flex-col gap-4 xl:col-span-6">
+          <IncomeBreakdown revenueByPlan={overview.revenueByPlan} />
+          <FinanceNotification alert={overview.primaryAlert} />
+        </div>
+      </div>
 
-          <div className="grid grid-cols-1 gap-4 xl:grid-cols-12">
-            <div className="xl:col-span-4">
-              <Wallet organizations={overview.topOrganizationsByPaidMonth} />
-            </div>
-            <div className="xl:col-span-4">
-              <UpcomingTransactions invoices={overview.upcomingInvoices} totalCents={upcomingTotalCents} />
-            </div>
-            <div className="xl:col-span-4">
-              <QuickActions />
-            </div>
-          </div>
-        </TabsContent>
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-12">
+        <div className="xl:col-span-7">
+          <TransactionsOverviewCard timeline={overview.cashflowTimeline} />
+        </div>
+        <div className="xl:col-span-5">
+          <BalanceDistributionCard distribution={overview.invoiceStatusDistribution} />
+        </div>
+      </div>
 
-        <TabsContent value="invoices">
-          <div className="grid grid-cols-1 gap-4 xl:grid-cols-12">
-            <div className="xl:col-span-7">
-              <BalanceDistributionCard distribution={overview.invoiceStatusDistribution} />
-            </div>
-            <div className="xl:col-span-5">
-              <UpcomingTransactions invoices={overview.upcomingInvoices} totalCents={upcomingTotalCents} />
-            </div>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="projections">
-          <div className="grid grid-cols-1 gap-4 xl:grid-cols-12">
-            <div className="xl:col-span-6">
-              <OverviewKpis kpis={overview.kpis} />
-            </div>
-            <div className="xl:col-span-6">
-              <IncomeBreakdown revenueByPlan={overview.revenueByPlan} />
-            </div>
-            <div className="col-span-full">
-              <TransactionsOverviewCard timeline={overview.cashflowTimeline} />
-            </div>
-          </div>
-        </TabsContent>
-      </Tabs>
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-12">
+        <div className="xl:col-span-4">
+          <Wallet organizations={overview.topOrganizationsByPaidMonth} />
+        </div>
+        <div className="xl:col-span-4">
+          <UpcomingTransactions invoices={overview.upcomingInvoices} totalCents={upcomingTotalCents} />
+        </div>
+        <div className="xl:col-span-4">
+          <QuickActions />
+        </div>
+      </div>
     </div>
   );
 }
